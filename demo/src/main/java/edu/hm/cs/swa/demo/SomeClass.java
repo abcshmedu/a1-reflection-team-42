@@ -11,4 +11,10 @@ public class SomeClass
 	public SomeClass(int foo) {
 	this.foo = foo;
 	}
+	
+	public static void main (String... strings){
+		SomeClass sc = new SomeClass(5);
+		Renderer rend = new Renderer(sc);
+		rend.render();
+	} 
 }

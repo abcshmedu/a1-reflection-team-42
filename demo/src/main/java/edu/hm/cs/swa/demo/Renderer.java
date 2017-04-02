@@ -20,6 +20,7 @@ public class Renderer {
 			res += "(Type "+attributes[i].getType()+ ")";
 			res += ": ";
 			try {
+				attributes[i].setAccessible(true);
 				Object ob = attributes[i].get(obj);
 				
 				Annotation [] ants =  attributes[i].getDeclaredAnnotations();
@@ -30,14 +31,17 @@ public class Renderer {
 					String[] split1 = ants[z].toString().split("\\(");
 					String tmp = split1[split1.length-1];
 					String fin = tmp.substring(5, tmp.length()-1);
-					if (fin.length() > 0) {
-						System.out.println(fin);
-					}
-					else{
-						System.out.println("nichts mehr enthalten");
+					if (fin.length() > 0 && fin == "edu.hm.renderer.ArrayRenderer") {
+						render = true;
+						z = ants.length;
 					}
 				}
-				
+			if (render){
+				res += "";
+			}
+			else {
+				res+= ob.toString();
+			}
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,7 +49,11 @@ public class Renderer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			res += "\n";
 		}
-		return "";
+		
+		System.out.println(res);
+		
+		return res;
 	}
 }
