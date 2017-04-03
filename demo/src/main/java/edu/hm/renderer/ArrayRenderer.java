@@ -10,13 +10,4 @@ public class ArrayRenderer {
 		return res;
 	}
 	
-	public static void main (String[] args){
-		int[] test = new int[4];
-		test[0] = 1;
-		test[1] = 2;
-		test[2] = 3;
-		test[3] = 4;
-		
-		System.out.println(test.getClass().getSimpleName());
-	}
 }
