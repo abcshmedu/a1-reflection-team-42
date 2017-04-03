@@ -1,5 +1,7 @@
 # To be ignored:
 .classpath
 .project
+demo.iml
+.idea/
 target/
 .metadata/
