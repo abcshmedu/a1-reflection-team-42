@@ -1,13 +1,16 @@
 package edu.hm.cs.swa.demo;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class Renderer {
 	private Object obj;
+	
 	public Renderer(Object ob){
 		obj = ob;
 	}
+	
 	
 	public String render(){
 		String res = "";
@@ -15,45 +18,63 @@ public class Renderer {
 		Field[] attributes =  c.getDeclaredFields();
 		
 		for (int i = 0; i < attributes.length; i++){
-			res += attributes[i].getName();
-			res += " ";
-			res += "(Type "+attributes[i].getType()+ ")";
-			res += ": ";
-			try {
-				attributes[i].setAccessible(true);
-				Object ob = attributes[i].get(obj);
-				
-				Annotation [] ants =  attributes[i].getDeclaredAnnotations();
-				boolean render = false;
-				
-				for (int z = 0; z<ants.length; z++){
-					Class<? extends Annotation> anno = ants[z].annotationType();
-					String[] split1 = ants[z].toString().split("\\(");
-					String tmp = split1[split1.length-1];
-					String fin = tmp.substring(5, tmp.length()-1);
-					if (fin.length() > 0 && fin == "edu.hm.renderer.ArrayRenderer") {
-						render = true;
-						z = ants.length;
+			RenderMe an =  attributes[i].getAnnotation(RenderMe.class);
+			
+			
+			
+			if (an != null){
+				res += attributes[i].getName();
+				res += " ";
+				res += "(Type "+attributes[i].getType().getSimpleName()+ ")";
+				res += ": ";
+				try {
+					attributes[i].setAccessible(true);
+					Object ob = attributes[i].get(obj);
+					
+					String renderClassString = an.with();
+					
+					if (!renderClassString.equals("")){
+						try {
+							Class<?> renderClass =  Class.forName(renderClassString);
+							Method rendMet =  renderClass.getMethod("render", ob.getClass());
+							Object rendObj =renderClass.getConstructor().newInstance();
+							res += (String) rendMet.invoke(rendObj, ob);
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InstantiationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (NoSuchMethodException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}	
+					else {
+						res+= ob.toString();
 					}
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			if (render){
-				res += "";
+				res += "\n";
 			}
-			else {
-				res+= ob.toString();
-			}
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			res += "\n";
+			
+			
+			
 		}
 		
 		System.out.println(res);
 		
 		return res;
-	}
+}
 }
