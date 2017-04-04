@@ -27,7 +27,7 @@ public class Renderer {
     public String render() {
         String res = "";
         Class< ? extends Object> c = obj.getClass();
-        res += "Instance of "+ c.getName() + ":\n";
+        res += "Instance of " + c.getName() + ":\n";
         Field[] attributes =  c.getDeclaredFields();
 
         for (int i = 0; i < attributes.length; i++) {
