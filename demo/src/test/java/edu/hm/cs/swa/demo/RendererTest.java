@@ -28,7 +28,7 @@ public class RendererTest {
     }
 
     /**
-     * 
+     * Testcase with SomeClass.
      * @throws Exception 
      */
     @Test
