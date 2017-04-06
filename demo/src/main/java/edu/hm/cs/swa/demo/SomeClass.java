@@ -21,5 +21,24 @@ public class SomeClass {
     public SomeClass(int foo) {
         this.foo = foo;
     }
-
+    
+    /**
+     * Performs some magic calculations.
+     * @return the answer
+     */
+    @RenderMe
+    public int magic() {
+        final int answer = 42;
+        return answer;
+    }
+    
+    /**
+     * Special method.
+     * @return int []
+     */
+    @RenderMe(with = "edu.hm.renderer.ArrayRenderer") 
+    public int[] whatever() {
+        final int [] array = {1, 2, 3};
+        return array;
+    }
 }
