@@ -5,15 +5,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 
+ * The class Renderer contains an object that fields and methods could be rendered by the render-method.
  * @author Markus Krahl
  *
  */
 public class Renderer {
+    /**
+     * Object to render.
+     */
     private Object obj;
 
     /**
-     * 
+     * Constructor takes an object.
      * @param ob 
      */
     public Renderer(Object ob) {
@@ -21,7 +24,7 @@ public class Renderer {
     }
 
     /**
-     * 
+     * The type, name and value of the object attributes and methods of the of the class are returned by that method.
      * @return String 
      */
     public String render() {
@@ -39,8 +42,10 @@ public class Renderer {
     }
     
     /**
-     * 
-     * @param attributes 
+     * Returns the type, name and value of all attributes of the object in a string.
+     * If the annotation of the attribute contains a non empty string,
+     * the value of that attribute will be rendered by the class specified by the string.
+     * @param attributes
      * @return String
      */
     private String printAttributes(final Field[] attributes) {
@@ -93,7 +98,9 @@ public class Renderer {
     }
     
     /**
-     * 
+     * Returns the type, name and value of all methods of the object in a string.
+     * If the annotation of the method contains a non empty string,
+     * the value of that method will be rendered by the class specified by the string.
      * @param methods 
      * @return String
      */
