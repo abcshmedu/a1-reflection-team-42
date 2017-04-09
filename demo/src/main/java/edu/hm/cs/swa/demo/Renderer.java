@@ -45,7 +45,7 @@ public class Renderer {
      * Returns the type, name and value of all attributes of the object in a string.
      * If the annotation of the attribute contains a non empty string,
      * the value of that attribute will be rendered by the class specified by the string.
-     * @param attributes
+     * @param attributes 
      * @return String
      */
     private String printAttributes(final Field[] attributes) {

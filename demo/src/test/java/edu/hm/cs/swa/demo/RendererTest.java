@@ -33,7 +33,10 @@ public class RendererTest {
      */
     @Test
     public void testRendering() throws Exception {
-        assertEquals("Instance of edu.hm.cs.swa.demo.SomeClass:\n"
-                + "foo (Type int): 5\narray (Type int[]): [1, 2, 3]\ndate (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\nwhatever (Type int[]): [1, 2, 3]\nmagic (Type int): 42\n", renderer.render());
+        String result = renderer.render();
+        assertTrue(result.contains("Instance of edu.hm.cs.swa.demo.SomeClass:\n"
+                + "foo (Type int): 5\narray (Type int[]): [1, 2, 3]\ndate (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n"));
+        assertTrue(result.contains("whatever (Type int[]): [1, 2, 3]\n"));
+        assertTrue(result.contains("magic (Type int): 42\n"));
     }
 }
